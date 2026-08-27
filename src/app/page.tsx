@@ -10,7 +10,7 @@ import {
   Sparkles,
   TrendingUp,
   ArrowRight,
-  CheckCircle2,
+  ExternalLink,
 } from 'lucide-react';
 import { getBrands, getArticles, getFAQs, getSiteSettings } from '@/lib/db';
 import HomeBrandSection from '@/components/brands/HomeBrandSection';
@@ -44,7 +44,7 @@ export default async function HomePage() {
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 border border-amber-500/40 shadow-lg shadow-amber-500/10">
             <Sparkles className="w-4 h-4 text-amber-400" />
             <span className="text-xs sm:text-sm font-black text-amber-300 uppercase tracking-wider">
-              Cập Nhật Tháng 8/2026 • Thẩm Định Độc Lập
+              {settings.heroBadge || 'Cập Nhật Tháng 8/2026 • Thẩm Định Độc Lập'}
             </span>
           </div>
 
@@ -61,38 +61,54 @@ export default async function HomePage() {
 
           {/* Trust Highlights Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto pt-4">
-            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 flex flex-col items-center text-center">
+            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 flex flex-col items-center text-center hover:border-amber-500/30 transition">
               <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400 mb-2">
                 <ShieldCheck className="w-6 h-6" />
               </div>
-              <span className="text-lg font-black text-white">100%</span>
-              <span className="text-xs text-slate-400">Giấy Phép Quốc Tế</span>
+              <span className="text-lg font-black text-white">{settings.stat1Value || '100%'}</span>
+              <span className="text-xs text-slate-400">{settings.stat1Label || 'Giấy Phép Quốc Tế'}</span>
             </div>
 
-            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 flex flex-col items-center text-center">
+            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 flex flex-col items-center text-center hover:border-emerald-500/30 transition">
               <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 mb-2">
                 <Clock className="w-6 h-6" />
               </div>
-              <span className="text-lg font-black text-white">&lt; 5 Phút</span>
-              <span className="text-xs text-slate-400">Rút Tiền Siêu Tốc</span>
+              <span className="text-lg font-black text-white">{settings.stat2Value || '< 5 Phút'}</span>
+              <span className="text-xs text-slate-400">{settings.stat2Label || 'Rút Tiền Siêu Tốc'}</span>
             </div>
 
-            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 flex flex-col items-center text-center">
+            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 flex flex-col items-center text-center hover:border-red-500/30 transition">
               <div className="p-2 rounded-xl bg-red-500/10 text-red-400 mb-2">
                 <Gift className="w-6 h-6" />
               </div>
-              <span className="text-lg font-black text-white">199K Free</span>
-              <span className="text-xs text-slate-400">Tặng Thưởng Tân Thủ</span>
+              <span className="text-lg font-black text-white">{settings.stat3Value || '199K Free'}</span>
+              <span className="text-xs text-slate-400">{settings.stat3Label || 'Tặng Thưởng Tân Thủ'}</span>
             </div>
 
-            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 flex flex-col items-center text-center">
+            <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 flex flex-col items-center text-center hover:border-sky-500/30 transition">
               <div className="p-2 rounded-xl bg-sky-500/10 text-sky-400 mb-2">
                 <Trophy className="w-6 h-6" />
               </div>
-              <span className="text-lg font-black text-white">50.000+</span>
-              <span className="text-xs text-slate-400">Cược Thủ Tin Chọn</span>
+              <span className="text-lg font-black text-white">{settings.stat4Value || '50.000+'}</span>
+              <span className="text-xs text-slate-400">{settings.stat4Label || 'Cược Thủ Tin Chọn'}</span>
             </div>
           </div>
+
+          {/* Optional Promo Banner */}
+          {settings.promoBannerUrl && (
+            <div className="pt-6 max-w-4xl mx-auto">
+              <Link
+                href={settings.promoBannerLink || '/top-nha-cai'}
+                className="block overflow-hidden rounded-2xl border border-amber-500/40 shadow-2xl hover:border-amber-400 transition group"
+              >
+                <img
+                  src={settings.promoBannerUrl}
+                  alt="Khuyến Mãi Đặc Biệt"
+                  className="w-full h-auto max-h-[220px] object-cover group-hover:scale-[1.02] transition duration-300"
+                />
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 

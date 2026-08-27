@@ -65,15 +65,34 @@ export interface SiteSettings {
   siteName: string;
   siteTitle: string;
   siteDescription: string;
+  keywords: string;
   logo: string;
+  favicon: string;
+  ogImage: string; // OpenGraph / Social share banner image
+  promoBannerUrl?: string; // Optional hero/home promotional banner image
+  promoBannerLink?: string; // Link when clicking promotional banner
   hotline: string;
   telegram: string;
   zalo: string;
   email: string;
+  facebookUrl?: string;
+  youtubeUrl?: string;
   footerDisclaimer: string;
   announcementBar: string;
+  heroBadge: string;
   heroTitle: string;
   heroSubtitle: string;
+  stat1Value: string;
+  stat1Label: string;
+  stat2Value: string;
+  stat2Label: string;
+  stat3Value: string;
+  stat3Label: string;
+  stat4Value: string;
+  stat4Label: string;
+  googleVerification?: string; // Google Search Console verification code
+  customHeadScripts?: string; // Custom HTML/scripts for <head> (Google Analytics, GTM, etc.)
+  customBodyScripts?: string; // Custom HTML/scripts for <body> (Livechat, etc.)
 }
 
 export interface TOCItem {

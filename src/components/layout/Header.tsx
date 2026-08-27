@@ -16,6 +16,8 @@ import {
   Zap,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { SiteSettings } from '@/lib/types';
+import Image from 'next/image';
 
 const NAV_ITEMS = [
   { href: '/', label: 'Trang Chủ', icon: Trophy },
@@ -26,7 +28,11 @@ const NAV_ITEMS = [
   { href: '/huong-dan', label: 'Hướng Dẫn', icon: BookOpen },
 ];
 
-export default function Header() {
+interface HeaderProps {
+  settings?: SiteSettings;
+}
+
+export default function Header({ settings }: HeaderProps) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -39,6 +45,8 @@ export default function Header() {
     }
   };
 
+  const hasCustomLogo = settings?.logo && settings.logo !== '/images/logo.png' && settings.logo.startsWith('http');
+
   return (
     <>
       <header className="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/80 transition-all">
@@ -46,22 +54,40 @@ export default function Header() {
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-yellow-600 flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-105 transition">
-                <Trophy className="w-6 h-6 text-slate-950" />
-              </div>
-              <div className="flex flex-col">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-xl sm:text-2xl font-black tracking-tight text-white">
-                    KEO<span className="text-amber-400">VIP</span>
-                  </span>
-                  <span className="bg-gradient-to-r from-red-500 to-rose-600 text-white text-[10px] font-extrabold px-1.5 py-0.5 rounded shadow">
-                    24/7
-                  </span>
+              {hasCustomLogo ? (
+                <div className="relative h-10 w-auto min-w-[120px]">
+                  <img
+                    src={settings.logo}
+                    alt={settings?.siteName || 'Logo'}
+                    className="h-10 w-auto object-contain"
+                  />
                 </div>
-                <span className="text-[10px] text-slate-400 tracking-wider uppercase hidden sm:block font-medium">
-                  Review & Xếp Hạng Nhà Cái
-                </span>
-              </div>
+              ) : (
+                <>
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-yellow-600 flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-105 transition">
+                    <Trophy className="w-6 h-6 text-slate-950" />
+                  </div>
+                  <div className="flex flex-col">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-xl sm:text-2xl font-black tracking-tight text-white">
+                        {settings?.siteName ? (
+                          settings.siteName
+                        ) : (
+                          <>
+                            KEO<span className="text-amber-400">VIP</span>
+                          </>
+                        )}
+                      </span>
+                      <span className="bg-gradient-to-r from-red-500 to-rose-600 text-white text-[10px] font-extrabold px-1.5 py-0.5 rounded shadow">
+                        24/7
+                      </span>
+                    </div>
+                    <span className="text-[10px] text-slate-400 tracking-wider uppercase hidden sm:block font-medium">
+                      Review & Xếp Hạng Nhà Cái
+                    </span>
+                  </div>
+                </>
+              )}
             </Link>
 
             {/* Desktop Navigation */}
