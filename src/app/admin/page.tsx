@@ -16,6 +16,7 @@ import { isAdminAuthenticated } from '@/lib/auth';
 import { getDashboardStats } from '@/lib/db';
 import AdminHeader from '@/components/admin/AdminHeader';
 import StatsCard from '@/components/admin/StatsCard';
+import ResetClicksButton from '@/components/admin/ResetClicksButton';
 
 export default async function AdminDashboardPage() {
   const isAuth = await isAdminAuthenticated();
@@ -27,10 +28,15 @@ export default async function AdminDashboardPage() {
 
   return (
     <div className="space-y-8 p-6 sm:p-8">
-      <AdminHeader
-        title="Bảng Điều Khiển Tổng Quan"
-        description="Theo dõi lưu lượng click affiliate, hiệu suất nhà cái và bài viết"
-      />
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <AdminHeader
+          title="Bảng Điều Khiển Tổng Quan"
+          description="Theo dõi lưu lượng click affiliate, hiệu suất nhà cái và bài viết"
+        />
+        <div className="flex-shrink-0">
+          <ResetClicksButton />
+        </div>
+      </div>
 
       {/* KPI Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">

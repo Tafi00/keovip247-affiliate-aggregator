@@ -115,6 +115,27 @@ export async function incrementClick(brandSlug: string): Promise<number> {
   return 0;
 }
 
+export async function resetAllClicks(): Promise<boolean> {
+  const brands = await getBrands();
+  brands.forEach((b) => {
+    b.clickCount = 0;
+  });
+
+  if (redis) {
+    try {
+      await redis.set('app:brands', brands);
+      const keys = await redis.keys('clicks:*');
+      if (keys && keys.length > 0) {
+        await Promise.all(keys.map((k) => redis.del(k)));
+      }
+    } catch (err) {
+      console.warn('Redis reset clicks error:', err);
+    }
+  }
+  memoryBrands = brands;
+  return true;
+}
+
 // --- ARTICLES ---
 export async function getArticles(): Promise<Article[]> {
   try {
